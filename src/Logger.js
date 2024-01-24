@@ -20,7 +20,7 @@ export class Logger {
     }
   }
   // LoggerClick사용시
-  // click이랑 screen나누면 tags 필용벗을듯
+  // click이랑 screen나누면 tags 필요 없을듯
   click({ name }) {
     this.name = name; // 어떤 버튼 클릭했는지
     if (name) {
@@ -32,9 +32,3 @@ export class Logger {
 
   time() {}
 }
-
-const useYLSLogger = () => {
-  return new Logger();
-};
-
-export default useYLSLogger;
