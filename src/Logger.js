@@ -1,5 +1,11 @@
 export class Logger {
-  constructor() {}
+  constructor() {
+    this.platform = '';
+    this.serviceName = '';
+    this.logId = '';
+    this.path = '';
+    this.name = '';
+  }
 
   // 랜덤한 id생성하게
   createId() {}
