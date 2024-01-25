@@ -11,7 +11,9 @@ const createRandomId = () => {
 };
 
 const createTimestamp = () => {
-  // Todo: create timestamp
+  const offset = new Date().getTimezoneOffset() * 60 * 1000;
+  const now = new Date(Date.now() - offset);
+  return now.toISOString();
 };
 
 export const useYLSLogger = () => {
@@ -26,5 +28,18 @@ export const useYLSLogger = () => {
   return {
     screen,
     click,
+  };
+};
+
+export const Logger = ({ path, platform, serviceName, name, message }: LoggerType) => {
+  return {
+    userId: createRandomId(),
+    timestamp: createTimestamp(),
+    event: {
+      platform,
+      serviceName,
+      name,
+      message,
+    },
   };
 };
