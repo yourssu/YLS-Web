@@ -5,6 +5,7 @@ import { LogScreen } from '../LogScreen';
 export const Home = () => {
   const [count, setCount] = useState(0);
   const router = useLocation();
+
   return (
     <>
       <h1>Vite + React</h1>

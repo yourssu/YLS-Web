@@ -19,15 +19,16 @@ const createTimestamp = () => {
 };
 
 export const useYLSLogger = () => {
-  const loggerType: LoggerType = {
-    path: '/',
-    platform: 'web',
-    serviceName: 'home',
-    name: '',
-    message: '/',
-  };
-  const logger = Logger(loggerType);
   const screen = ({ screenName, eventName }: LogPayloadParams) => {
+    //사용자에서 path,name,message를 넣어줌
+    const loggerType: LoggerType = {
+      path: '/',
+      platform: 'web',
+      serviceName: 'home',
+      name: '',
+      message: '/',
+    };
+    const logger = Logger(loggerType);
     console.log(`Logging screen information for path: ${screenName}`);
     logger.event.name = eventName;
     logger.event.path = screenName;
@@ -45,6 +46,27 @@ export const useYLSLogger = () => {
 
   const click = ({ eventName }: LogPayloadParams) => {
     console.log(`Logging click information for button: ${eventName}`);
+    //사용자에서 path,name,message를 넣어줌
+    const loggerType: LoggerType = {
+      path: '/',
+      platform: 'web',
+      serviceName: 'home',
+      name: '',
+      message: '/',
+    };
+    const logger = Logger(loggerType);
+
+    logger.event.name = eventName;
+
+    if (window.localStorage.getItem('yls-web') == undefined) {
+      const list: any[] = [];
+      list.push(logger);
+      localStorage.setItem('yls-web', JSON.stringify(list));
+    } else {
+      const remainList: any[] = JSON.parse(localStorage.getItem('yls-web') as string) || [];
+      const updateList = [...remainList, logger];
+      localStorage.setItem('yls-web', JSON.stringify(updateList));
+    }
   };
   // todo: 로컬스토리지 로그 개수가 10개 넘어가면 postLog.ts호출
 
