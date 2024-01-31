@@ -1,6 +1,7 @@
 import { useYLSLogger } from '.';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
+import { LogPayloadParams } from './types/LogPayloadParams';
 
 interface Props {
   children: React.ReactNode;

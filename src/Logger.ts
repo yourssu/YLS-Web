@@ -1,3 +1,5 @@
+import { LogPayloadParams } from './types/LogPayloadParams';
+
 interface LoggerType {
   path: string;
   platform: string;
@@ -17,12 +19,12 @@ const createTimestamp = () => {
 };
 
 export const useYLSLogger = () => {
-  const screen = ({ path }: LoggerType) => {
+  const screen = ({ path }: LogPayloadParams) => {
     // console.log(`Logging screen information for path: ${path}`);
   };
 
-  const click = ({ name }: LoggerType) => {
-    // console.log(`Logging click information for button: ${name}`);
+  const click = ({ name }: LogPayloadParams) => {
+    console.log(`Logging click information for button: ${name}`);
   };
 
   return {
