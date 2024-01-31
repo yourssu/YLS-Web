@@ -1,4 +1,5 @@
 import { LogPayloadParams } from './types/LogPayloadParams';
+import { LogType } from './types/LogType';
 
 // LoggerType: Log 내 event에 들어가는 값
 interface LoggerType {
@@ -11,12 +12,25 @@ interface LoggerType {
 
 const createUserId = () => {
   // Todo: create random id
+  return 123;
 };
 
 const createTimestamp = () => {
   const offset = new Date().getTimezoneOffset() * 60 * 1000;
   const now = new Date(Date.now() - offset);
   return now.toISOString();
+};
+
+const setLocalStorage = (logger: LogType) => {
+  if (window.localStorage.getItem('yls-web') == undefined) {
+    const list: any[] = [];
+    list.push(logger);
+    localStorage.setItem('yls-web', JSON.stringify(list));
+  } else {
+    const remainList: any[] = JSON.parse(localStorage.getItem('yls-web') as string) || [];
+    const updateList = [...remainList, logger];
+    localStorage.setItem('yls-web', JSON.stringify(updateList));
+  }
 };
 
 export const useYLSLogger = () => {
@@ -32,15 +46,7 @@ export const useYLSLogger = () => {
     console.log(`Logging screen information for path: ${serviceName}`);
     logger.event.name = name;
 
-    if (window.localStorage.getItem('yls-web') == undefined) {
-      const list: any[] = [];
-      list.push(logger);
-      localStorage.setItem('yls-web', JSON.stringify(list));
-    } else {
-      const remainList: any[] = JSON.parse(localStorage.getItem('yls-web') as string) || [];
-      const updateList = [...remainList, logger];
-      localStorage.setItem('yls-web', JSON.stringify(updateList));
-    }
+    setLocalStorage(logger);
   };
 
   const click = ({ name }: LogPayloadParams) => {
@@ -56,15 +62,7 @@ export const useYLSLogger = () => {
 
     logger.event.name = name;
 
-    if (window.localStorage.getItem('yls-web') == undefined) {
-      const list: any[] = [];
-      list.push(logger);
-      localStorage.setItem('yls-web', JSON.stringify(list));
-    } else {
-      const remainList: any[] = JSON.parse(localStorage.getItem('yls-web') as string) || [];
-      const updateList = [...remainList, logger];
-      localStorage.setItem('yls-web', JSON.stringify(updateList));
-    }
+    setLocalStorage(logger);
   };
   // todo: 로컬스토리지 로그 개수가 10개 넘어가면 postLog.ts호출
 
