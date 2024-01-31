@@ -1,12 +1,14 @@
+import { LogPayloadParams } from './types/LogPayloadParams';
+
 interface LoggerType {
-  path: string;
+  path?: string;
   platform: string;
   serviceName: string;
   name: string;
   message: string;
 }
 
-const createRandomId = () => {
+const createUserId = () => {
   // Todo: create random id
 };
 
@@ -17,13 +19,39 @@ const createTimestamp = () => {
 };
 
 export const useYLSLogger = () => {
-  const screen = ({ path }: LoggerType) => {
-    // console.log(`Logging screen information for path: ${path}`);
+  const loggerType: LoggerType = {
+    path: '/',
+    platform: 'web',
+    serviceName: 'home',
+    name: '',
+    message: '/',
+  };
+  const logger = Logger(loggerType);
+  const screen = ({ screenName, eventName }: LogPayloadParams) => {
+    console.log(`Logging screen information for path: ${screenName}`);
+    const serviceName = 'Home';
+    const logEvents: LogPayloadParams = {
+      userId: 0,
+      screenName: screenName,
+      eventName: eventName,
+    };
+    logger.events = logEvents;
+
+    if (window.localStorage.getItem('yls-web') == undefined) {
+      const list: any[] = [];
+      list.push(logger);
+      localStorage.setItem('yls-web', JSON.stringify(list));
+    } else {
+      const remainList: any[] = JSON.parse(localStorage.getItem('yls-web') as string) || [];
+      const updateList = [...remainList, logger];
+      localStorage.setItem('yls-web', JSON.stringify(updateList));
+    }
   };
 
-  const click = ({ name }: LoggerType) => {
-    // console.log(`Logging click information for button: ${name}`);
+  const click = ({ eventName }: LogPayloadParams) => {
+    console.log(`Logging click information for button: ${eventName}`);
   };
+  // todo: 로컬스토리지 로그 개수가 10개 넘어가면 postLog.ts호출
 
   return {
     screen,
@@ -31,15 +59,20 @@ export const useYLSLogger = () => {
   };
 };
 
-export const Logger = ({ path, platform, serviceName, name, message }: LoggerType) => {
+export const Logger = (
+  { path, platform, serviceName, name, message }: LoggerType,
+  { events }: { events?: LogPayloadParams } = {}
+) => {
   return {
-    userId: createRandomId(),
+    userId: createUserId(),
     timestamp: createTimestamp(),
     event: {
       platform,
       serviceName,
       name,
       message,
+      path,
     },
+    events: events,
   };
 };
