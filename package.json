@@ -1,18 +1,36 @@
 {
-  "name": "yls-web",
+  "name": "@yourssu/logging-system-react",
+  "private": "false",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Yourssu Logging System for React",
+  "keywords": [
+    "yourssu",
+    "loggin system",
+    "react"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourssu/YLS-Web.git"
+  },
+  "author": "",
+  "license": "MIT",
   "type": "module",
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.es.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.cjs.js"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
   "peerDependencies": {
     "axios": "^1.6.4",
     "react": "^18.2.0",
@@ -39,7 +57,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.3",
     "typescript": "^5.2.2",
-    "vite": "^5.0.8"
-  },
-  "dependencies": {}
+    "vite": "^5.0.8",
+    "vite-plugin-dts": "^3.7.2"
+  }
 }
