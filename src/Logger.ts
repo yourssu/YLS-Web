@@ -29,13 +29,8 @@ export const useYLSLogger = () => {
   const logger = Logger(loggerType);
   const screen = ({ screenName, eventName }: LogPayloadParams) => {
     console.log(`Logging screen information for path: ${screenName}`);
-    const serviceName = 'Home';
-    const logEvents: LogPayloadParams = {
-      userId: 0,
-      screenName: screenName,
-      eventName: eventName,
-    };
-    logger.events = logEvents;
+    logger.event.name = eventName;
+    logger.event.path = screenName;
 
     if (window.localStorage.getItem('yls-web') == undefined) {
       const list: any[] = [];
@@ -59,10 +54,7 @@ export const useYLSLogger = () => {
   };
 };
 
-export const Logger = (
-  { path, platform, serviceName, name, message }: LoggerType,
-  { events }: { events?: LogPayloadParams } = {}
-) => {
+export const Logger = ({ path, platform, serviceName, name, message }: LoggerType) => {
   return {
     userId: createUserId(),
     timestamp: createTimestamp(),
@@ -73,6 +65,5 @@ export const Logger = (
       message,
       path,
     },
-    events: events,
   };
 };
