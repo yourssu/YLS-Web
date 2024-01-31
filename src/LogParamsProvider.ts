@@ -1,3 +1,3 @@
-import { createContext } from 'react';
+// import { createContext } from 'react';
 
-const LogParamsContext = createContext(null);
+// const LogParamsContext = createContext(null);
