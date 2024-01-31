@@ -1,14 +1,4 @@
-import { LogPayloadParams } from './types/LogPayloadParams';
-import { LogType } from './types/LogType';
-
-// LoggerType: Log 내 event에 들어가는 값
-interface LoggerType {
-  serviceName: 'drawer' | 'home' | 'search';
-  name: string;
-  message?: string;
-  path?: string;
-  tags?: string[];
-}
+import { LogPayloadParams, LogType, LoggerType } from './types/LogType';
 
 const createUserId = () => {
   // Todo: create random id
