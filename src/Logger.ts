@@ -1,11 +1,12 @@
 import { LogPayloadParams } from './types/LogPayloadParams';
 
+// LoggerType: Log 내 event에 들어가는 값
 interface LoggerType {
-  path?: string;
-  platform: string;
-  serviceName: string;
+  serviceName: 'drawer' | 'home' | 'search';
   name: string;
-  message: string;
+  message?: string;
+  path?: string;
+  tags?: string[];
 }
 
 const createUserId = () => {
@@ -19,19 +20,17 @@ const createTimestamp = () => {
 };
 
 export const useYLSLogger = () => {
-  const screen = ({ screenName, eventName }: LogPayloadParams) => {
+  const screen = ({ serviceName, name }: LogPayloadParams) => {
     //사용자에서 path,name,message를 넣어줌
     const loggerType: LoggerType = {
       path: '/',
-      platform: 'web',
       serviceName: 'home',
       name: '',
       message: '/',
     };
     const logger = Logger(loggerType);
-    console.log(`Logging screen information for path: ${screenName}`);
-    logger.event.name = eventName;
-    logger.event.path = screenName;
+    console.log(`Logging screen information for path: ${serviceName}`);
+    logger.event.name = name;
 
     if (window.localStorage.getItem('yls-web') == undefined) {
       const list: any[] = [];
@@ -44,19 +43,18 @@ export const useYLSLogger = () => {
     }
   };
 
-  const click = ({ eventName }: LogPayloadParams) => {
-    console.log(`Logging click information for button: ${eventName}`);
+  const click = ({ name }: LogPayloadParams) => {
+    console.log(`Logging click information for button: ${name}`);
     //사용자에서 path,name,message를 넣어줌
     const loggerType: LoggerType = {
       path: '/',
-      platform: 'web',
       serviceName: 'home',
       name: '',
       message: '/',
     };
     const logger = Logger(loggerType);
 
-    logger.event.name = eventName;
+    logger.event.name = name;
 
     if (window.localStorage.getItem('yls-web') == undefined) {
       const list: any[] = [];
@@ -76,16 +74,17 @@ export const useYLSLogger = () => {
   };
 };
 
-export const Logger = ({ path, platform, serviceName, name, message }: LoggerType) => {
+export const Logger = ({ serviceName, name, message, path, tags }: LoggerType) => {
   return {
     userId: createUserId(),
     timestamp: createTimestamp(),
     event: {
-      platform,
+      platform: 'web',
       serviceName,
       name,
       message,
       path,
+      tags,
     },
   };
 };
