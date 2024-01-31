@@ -40,5 +40,6 @@
     "react-router-dom": "^6.21.3",
     "typescript": "^5.2.2",
     "vite": "^5.0.8"
-  }
+  },
+  "dependencies": {}
 }

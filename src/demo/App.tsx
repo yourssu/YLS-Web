@@ -1,22 +1,14 @@
-import { useState } from 'react';
-import { LogClick } from '../LogClick';
-
+import { BrowserRouter } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+import { Home } from './Home';
 export const App = () => {
-  const [count, setCount] = useState(0);
-
   return (
     <>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <LogClick
-          params={{
-            userId: 123,
-            name: 'click',
-          }}
-        >
-          <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        </LogClick>
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 };
