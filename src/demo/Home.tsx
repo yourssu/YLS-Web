@@ -12,16 +12,16 @@ export const Home = () => {
       <div className="card">
         <LogScreen
           params={{
-            userId: 123,
-            screenName: router.pathname,
-            eventName: '',
+            userId: 'test',
+            // serviceName: router.pathname,
+            serviceName: 'drawer', // 임시 값 (로컬 테스트 시 type을 잠시 변경해야 함)
+            name: '',
           }}
         >
           <LogClick
             params={{
-              userId: 123,
-              eventName: 'click',
-              screenName: '',
+              userId: 'test',
+              name: 'click',
             }}
           >
             <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>

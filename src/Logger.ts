@@ -12,16 +12,17 @@ const createTimestamp = () => {
 };
 
 export const useYLSLogger = () => {
-  const screen = ({ userId, name }: LogPayloadParams) => {
+  const screen = ({ userId, serviceName, name }: LogPayloadParams) => {
     //사용자에서 userId, name, message(선택) 등을 넣어줌
     const loggerType: LogPayloadParams = {
       userId: userId,
       path: '/',
-      serviceName: 'home',
+      serviceName: serviceName,
       name: '',
       message: '/',
     };
     const logger = Logger(loggerType);
+    console.log(`Logging screen information for screen: ${serviceName}`);
     logger.event.name = name;
   };
 
