@@ -1,9 +1,9 @@
 import { postLog } from './apis/postLog';
-import { LogPayloadParams, LogType, LoggerType } from './types/LogType';
+import { LogPayloadParams, LogType } from './types/LogType';
 
-const createUserId = () => {
-  // Todo: create random id
-  return 123;
+const createHashedId = (userId: string) => {
+  // Todo: create hashedId
+  return '';
 };
 
 const createTimestamp = () => {
@@ -54,36 +54,35 @@ const setLocalStorage = async (logger: LogType) => {
 };
 
 export const useYLSLogger = () => {
-  const screen = ({ serviceName, name, path }: LogPayloadParams) => {
-    const loggerType: LoggerType = {
+  const screen = ({ userId, serviceName, name, path }: LogPayloadParams) => {
+    const loggerType: LogPayloadParams = {
+      userId: userId,
       path: '/',
-      serviceName: 'home',
+      serviceName: serviceName,
       name: '',
       message: '',
     };
     const logger = Logger(loggerType);
     console.log(`Logging screen information for path: ${serviceName}`);
     logger.event.name = name;
-    logger.event.serviceName = serviceName;
     logger.event.path = path;
 
     setLocalStorage(logger);
   };
 
-  const click = ({ serviceName, name, path }: LogPayloadParams) => {
+  const click = ({ userId, serviceName, name, path }: LogPayloadParams) => {
     console.log(`Logging click information for button: ${name}`);
     //사용자에서 path,name,message를 넣어줌
-    const loggerType: LoggerType = {
+    const loggerType: LogPayloadParams = {
+      userId: userId,
       path: '/',
-      serviceName: 'home',
+      serviceName: serviceName,
       name: '',
       message: '',
     };
     const logger = Logger(loggerType);
 
     logger.event.name = name;
-    logger.event.name = name;
-    logger.event.serviceName = serviceName;
     logger.event.path = path;
     setLocalStorage(logger);
   };
@@ -95,9 +94,9 @@ export const useYLSLogger = () => {
   };
 };
 
-export const Logger = ({ serviceName, name, message, path, tags }: LoggerType) => {
+export const Logger = ({ userId, serviceName, name, message, path, tags }: LogPayloadParams) => {
   return {
-    userId: createUserId(),
+    hashedId: createHashedId(userId),
     timestamp: createTimestamp(),
     event: {
       platform: 'web',

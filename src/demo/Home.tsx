@@ -13,18 +13,18 @@ export const Home = () => {
       <div className="card">
         <LogScreen
           params={{
-            userId: 123,
             path: router.pathname,
             name: '',
+            userId: 'test',
             serviceName: 'home',
           }}
         >
           <LogClick
             params={{
-              userId: 123,
               name: 'click',
               serviceName: 'home',
               path: router.pathname,
+              userId: 'test',
             }}
           >
             <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
