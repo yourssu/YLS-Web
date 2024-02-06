@@ -59,7 +59,7 @@ export const useYLSLogger = () => {
       path: '/',
       serviceName: 'home',
       name: '',
-      message: '/',
+      message: '',
     };
     const logger = Logger(loggerType);
     console.log(`Logging screen information for path: ${serviceName}`);
@@ -77,7 +77,7 @@ export const useYLSLogger = () => {
       path: '/',
       serviceName: 'home',
       name: '',
-      message: '/',
+      message: '',
     };
     const logger = Logger(loggerType);
 
