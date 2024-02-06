@@ -4,15 +4,15 @@ import { useLocation } from 'react-router-dom';
 import { LogScreen } from '../LogScreen';
 import { useContext } from 'react';
 import LogContext from '../context/Logcontext';
-export const Home = () => {
+export const Drawer = () => {
   const [count, setCount] = useState(0);
   const router = useLocation();
   const logList = useContext(LogContext);
-  console.log('logListHome', logList);
+  console.log('logListDrawer', logList);
 
   return (
-    <LogContext.Provider>
-      <h1>Home</h1>
+    <>
+      <h1>Drawer</h1>
       <div className="card">
         <LogScreen
           params={{
@@ -34,6 +34,6 @@ export const Home = () => {
           </LogClick>
         </LogScreen>
       </div>
-    </LogContext.Provider>
+    </>
   );
 };

@@ -1,12 +1,14 @@
 import { BrowserRouter } from 'react-router-dom';
 import { Routes, Route } from 'react-router-dom';
 import { Home } from './Home';
+import { Drawer } from './Drawer';
 export const App = () => {
   return (
     <>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/drawer" element={<Drawer />} />
         </Routes>
       </BrowserRouter>
     </>
