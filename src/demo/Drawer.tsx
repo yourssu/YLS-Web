@@ -2,13 +2,9 @@ import { useState } from 'react';
 import { LogClick } from '../LogClick';
 import { useLocation } from 'react-router-dom';
 import { LogScreen } from '../LogScreen';
-import { useContext } from 'react';
-import LogContext from '../context/Logcontext';
 export const Drawer = () => {
   const [count, setCount] = useState(0);
   const router = useLocation();
-  const logList = useContext(LogContext);
-  console.log('logListDrawer', logList);
 
   return (
     <>
