@@ -5,23 +5,25 @@ import { LogScreen } from '../LogScreen';
 export const Drawer = () => {
   const [count, setCount] = useState(0);
   const router = useLocation();
-  console.log(router.pathname);
+
   return (
     <>
-      <h1>Vite + React</h1>
+      <h1>Drawer</h1>
       <div className="card">
         <LogScreen
           params={{
-            userId: 123,
             path: router.pathname,
             name: '',
+            userId: 'test',
+            serviceName: 'home',
           }}
         >
           <LogClick
             params={{
-              userId: 123,
               name: 'click',
+              serviceName: 'home',
               path: router.pathname,
+              userId: 'test',
             }}
           >
             <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
