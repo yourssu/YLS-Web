@@ -1,6 +1,6 @@
 // LogType: 최종 Log 형태
 export interface LogType {
-  userId: number;
+  hashedId: string;
   timestamp: string;
   event: {
     platform: string;
@@ -12,20 +12,12 @@ export interface LogType {
   };
 }
 
-// LoggerType: Log 내 event에 들어가는 값
-export interface LoggerType {
-  serviceName: 'drawer' | 'home' | 'search';
-  name: string;
-  message?: string;
-  path?: string;
-  tags?: string[];
-}
-
+export type ServiceNameType = 'drawer' | 'home' | 'search';
 // LogPayloadParams: 사용처에서 넣어주는 값
 export interface LogPayloadParams {
-  userId: number;
+  userId: string;
   name: string | '';
-  serviceName?: 'drawer' | 'home' | 'search';
+  serviceName: ServiceNameType;
   message?: string;
   path?: string;
   tags?: string[];
