@@ -17,35 +17,16 @@ const setLocalStorageClear = () => {
   localStorage.setItem('yls-web', JSON.stringify(list));
 };
 
-const setRemoveDuplicates = (logger: LogType) => {
-  const localStorageLogs: LogType[] = JSON.parse(window.localStorage.getItem('yls-web') || '[]');
-  const logExistsIndex = localStorageLogs.findIndex(
-    (log: LogType) =>
-      log.event.name === logger.event.name &&
-      log.event.path === logger.event.path &&
-      log.timestamp === logger.timestamp
-  );
-
-  if (logExistsIndex !== -1) {
-    // 중복된 로그가 존재하면 해당 로그를 제거
-    localStorageLogs.splice(logExistsIndex);
-  }
-
-  localStorageLogs.push(logger);
-  localStorage.setItem('yls-web', JSON.stringify(localStorageLogs));
-};
 const setLocalStorage = async (logger: LogType) => {
   if (window.localStorage.getItem('yls-web') == undefined) {
     const list: any[] = [];
     list.push(logger);
     localStorage.setItem('yls-web', JSON.stringify(list));
-    setRemoveDuplicates(logger);
   } else {
     const remainList: any[] = JSON.parse(localStorage.getItem('yls-web') as string) || [];
     if (remainList.length < 10) {
       const updateList = [...remainList, logger];
       localStorage.setItem('yls-web', JSON.stringify(updateList));
-      setRemoveDuplicates(logger);
     } else {
       setLocalStorageClear();
       const res = await postLog();
