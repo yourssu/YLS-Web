@@ -1,9 +1,35 @@
 import { postLog } from './apis/postLog';
 import { LogPayloadParams, LogType } from './types/LogType';
+import CryptoJS from 'crypto-js';
+
+const createRandomId = () => {
+  let randomId = '';
+  const charactersRange = { start: 33, end: 126 };
+
+  for (let i = 0; i < 10; i++) {
+    const randomCharCode =
+      Math.floor(Math.random() * (charactersRange.end - charactersRange.start + 1)) +
+      charactersRange.start;
+    randomId += String.fromCharCode(randomCharCode);
+  }
+
+  return randomId;
+};
 
 const createHashedId = (userId: string) => {
-  // Todo: create hashedId
-  return '';
+  let hashedId = '';
+  let localHashedId = '';
+  const existLocalHashedId = window.localStorage.getItem('yls-web');
+
+  if (userId === '' && existLocalHashedId) {
+    localHashedId = JSON.parse(window.localStorage.getItem('yls-web') as string).hashedId;
+  } else if (userId === '') {
+    userId = createRandomId();
+  }
+
+  hashedId = CryptoJS.SHA256(userId).toString(CryptoJS.enc.Base64);
+
+  return localHashedId ? localHashedId : hashedId;
 };
 
 const createTimestamp = () => {
