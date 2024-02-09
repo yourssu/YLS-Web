@@ -38,6 +38,7 @@
     "react-router-dom": "^6.21.3"
   },
   "devDependencies": {
+    "@types/crypto-js": "^4.2.2",
     "@types/react": "^18.2.55",
     "@types/react-dom": "^18.2.17",
     "@types/react-router-dom": "^5.3.3",
@@ -59,5 +60,8 @@
     "typescript": "^5.2.2",
     "vite": "^5.0.8",
     "vite-plugin-dts": "^3.7.2"
+  },
+  "dependencies": {
+    "crypto-js": "^4.2.0"
   }
 }
