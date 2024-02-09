@@ -3,34 +3,33 @@ import { LogPayloadParams, LogType } from './types/LogType';
 import CryptoJS from 'crypto-js';
 
 const createRandomId = () => {
-  let result = '';
+  let randomId = '';
   const charactersRange = { start: 33, end: 126 };
 
   for (let i = 0; i < 10; i++) {
     const randomCharCode =
       Math.floor(Math.random() * (charactersRange.end - charactersRange.start + 1)) +
       charactersRange.start;
-    result += String.fromCharCode(randomCharCode);
+    randomId += String.fromCharCode(randomCharCode);
   }
 
-  return result;
+  return randomId;
 };
 
 const createHashedId = (userId: string) => {
-  /** 한 번 로깅을 한 유저라면 localStorage에 hasedId 값이 존재할 것 */
-  const localHashedId = window.localStorage.getItem('hashedId');
-  if (localHashedId !== null) {
-    return localHashedId;
-  }
+  let hashedId = '';
+  let localHashedId = '';
+  const existLocalHashedId = window.localStorage.getItem('yls-web');
 
-  /** 비로그인 사용자의 첫 진입일 경우 */
-  if (userId === '') {
+  if (userId === '' && existLocalHashedId) {
+    localHashedId = JSON.parse(window.localStorage.getItem('yls-web') as string).hashedId;
+  } else if (userId === '') {
     userId = createRandomId();
   }
 
-  const hashedId = CryptoJS.SHA256(userId).toString(CryptoJS.enc.Base64);
+  hashedId = CryptoJS.SHA256(userId).toString(CryptoJS.enc.Base64);
 
-  return hashedId;
+  return localHashedId ? localHashedId : hashedId;
 };
 
 const createTimestamp = () => {
