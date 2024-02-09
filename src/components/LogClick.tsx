@@ -1,6 +1,6 @@
 import { Children, cloneElement } from 'react';
-import { useYLSLogger } from '.';
-import { LogPayloadParams } from './types/LogType';
+import { useYLSLogger } from '..';
+import { LogPayloadParams } from '../types/LogType';
 
 interface Props {
   children: React.ReactElement;
