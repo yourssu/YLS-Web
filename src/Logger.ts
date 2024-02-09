@@ -1,5 +1,5 @@
 import { postLog } from './apis/postLog';
-import { LogPayloadParams, LogType } from './types/LogType';
+import { LogPayloadParams, LogType, ServiceNameType } from './types/LogType';
 
 const createHashedId = (userId: string) => {
   // Todo: create hashedId
@@ -34,40 +34,36 @@ const setLocalStorage = async (logger: LogType) => {
   }
 };
 
+const initialLog = (
+  userId: string,
+  serviceName: ServiceNameType,
+  name: string,
+  path: string | undefined
+) => {
+  const loggerType: LogPayloadParams = {
+    userId: userId,
+    path: '/',
+    serviceName: serviceName,
+    name: '',
+    message: '',
+  };
+
+  const logger = Logger(loggerType);
+
+  logger.event.name = name;
+  logger.event.path = path;
+
+  setLocalStorage(logger);
+};
+
 export const useYLSLogger = () => {
   const screen = ({ userId, serviceName, name, path }: LogPayloadParams) => {
-    const loggerType: LogPayloadParams = {
-      userId: userId,
-      path: '/',
-      serviceName: serviceName,
-      name: '',
-      message: '',
-    };
-    const logger = Logger(loggerType);
-    console.log(`Logging screen information for path: ${serviceName}`);
-    logger.event.name = name;
-    logger.event.path = path;
-
-    setLocalStorage(logger);
+    initialLog(userId, serviceName, name, path);
   };
 
   const click = ({ userId, serviceName, name, path }: LogPayloadParams) => {
-    console.log(`Logging click information for button: ${name}`);
-    //사용자에서 path,name,message를 넣어줌
-    const loggerType: LogPayloadParams = {
-      userId: userId,
-      path: '/',
-      serviceName: serviceName,
-      name: '',
-      message: '',
-    };
-    const logger = Logger(loggerType);
-
-    logger.event.name = name;
-    logger.event.path = path;
-    setLocalStorage(logger);
+    initialLog(userId, serviceName, name, path);
   };
-  // todo: 로컬스토리지 로그 개수가 10개 넘어가면 postLog.ts호출
 
   return {
     screen,
