@@ -14,7 +14,7 @@ export const Drawer = () => {
           params={{
             path: router.pathname,
             name: '',
-            userId: 'test',
+            userId: '',
             serviceName: 'home',
           }}
         >
@@ -23,7 +23,7 @@ export const Drawer = () => {
               name: 'click',
               serviceName: 'home',
               path: router.pathname,
-              userId: 'test',
+              userId: '',
             }}
           >
             <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
