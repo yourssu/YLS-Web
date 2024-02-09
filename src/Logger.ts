@@ -1,4 +1,4 @@
-import { setLocalStorage } from './setLocalStorage';
+import { SetLocalStorage } from './SetLocalStorage';
 import { LogPayloadParams, ServiceNameType } from './types/LogType';
 import CryptoJS from 'crypto-js';
 
@@ -57,7 +57,7 @@ const initialLog = (
   logger.event.name = name;
   logger.event.path = path;
 
-  setLocalStorage(logger);
+  SetLocalStorage(logger);
 };
 
 export const useYLSLogger = () => {
