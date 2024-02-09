@@ -7,6 +7,20 @@ const createHashedId = (userId: string) => {
   return hashedId;
 };
 
+const createRandomId = () => {
+  let result = '';
+  const charactersRange = { start: 33, end: 126 };
+
+  for (let i = 0; i < 10; i++) {
+    const randomCharCode =
+      Math.floor(Math.random() * (charactersRange.end - charactersRange.start + 1)) +
+      charactersRange.start;
+    result += String.fromCharCode(randomCharCode);
+  }
+
+  return result;
+};
+
 const createTimestamp = () => {
   const offset = new Date().getTimezoneOffset() * 60 * 1000;
   const now = new Date(Date.now() - offset);
