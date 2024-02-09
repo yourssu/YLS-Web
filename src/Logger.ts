@@ -1,9 +1,10 @@
 import { postLog } from './apis/postLog';
 import { LogPayloadParams, LogType } from './types/LogType';
+import CryptoJS from 'crypto-js';
 
 const createHashedId = (userId: string) => {
-  // Todo: create hashedId
-  return '';
+  const hashedId = CryptoJS.SHA256(userId).toString(CryptoJS.enc.Base64);
+  return hashedId;
 };
 
 const createTimestamp = () => {
