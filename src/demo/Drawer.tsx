@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { LogClick } from '../LogClick';
+import { LogClick } from '../components/LogClick';
 import { useLocation } from 'react-router-dom';
-import { LogScreen } from '../LogScreen';
+import { LogScreen } from '../components/LogScreen';
+
 export const Drawer = () => {
   const [count, setCount] = useState(0);
   const router = useLocation();
