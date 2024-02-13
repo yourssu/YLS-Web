@@ -13,10 +13,9 @@ export const Home = () => {
       <div className="card">
         <LogScreen
           params={{
-            path: router.pathname,
             name: '',
-            userId: 'test',
             serviceName: 'home',
+            userId: 'test',
           }}
         >
           <LogClick
