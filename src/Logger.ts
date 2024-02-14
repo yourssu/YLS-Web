@@ -1,4 +1,4 @@
-import { SetLocalStorage } from './SetLocalStorage';
+import { SetLocalStorage, SetLocalStorageClear } from './SetLocalStorage';
 import { LogPayloadParams, ServiceNameType } from './types/LogType';
 import CryptoJS from 'crypto-js';
 
