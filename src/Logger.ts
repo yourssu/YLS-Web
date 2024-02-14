@@ -89,3 +89,12 @@ export const Logger = ({ userId, serviceName, name, message, path, tags }: LogPa
     },
   };
 };
+window.addEventListener('beforeunload', async (event) => {
+  // 명세에 따라 preventDefault는 호출해야하며, 기본 동작을 방지합니다.
+  event.preventDefault();
+  console.log('이탈감지');
+  const logList: any[] = JSON.parse(localStorage.getItem('yls-web') as string) || [];
+  console.log(logList);
+  // const res = await postLog();
+  SetLocalStorageClear();
+});
