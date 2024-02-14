@@ -1,6 +1,6 @@
-import { useYLSLogger } from '.';
+import { useYLSLogger } from '..';
 import { useEffect } from 'react';
-import { LogPayloadParams } from './types/LogType';
+import { LogPayloadParams } from '../types/LogType';
 
 interface Props {
   children: React.ReactNode;

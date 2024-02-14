@@ -1,9 +1,35 @@
-import { postLog } from './apis/postLog';
-import { LogPayloadParams, LogType } from './types/LogType';
+import { SetLocalStorage } from './SetLocalStorage';
+import { LogPayloadParams, ServiceNameType } from './types/LogType';
+import CryptoJS from 'crypto-js';
+
+const createRandomId = () => {
+  let randomId = '';
+  const charactersRange = { start: 33, end: 126 };
+
+  for (let i = 0; i < 10; i++) {
+    const randomCharCode =
+      Math.floor(Math.random() * (charactersRange.end - charactersRange.start + 1)) +
+      charactersRange.start;
+    randomId += String.fromCharCode(randomCharCode);
+  }
+
+  return randomId;
+};
 
 const createHashedId = (userId: string) => {
-  // Todo: create hashedId
-  return '';
+  let hashedId = '';
+  let localHashedId = '';
+  const existLocalHashedId = window.localStorage.getItem('yls-web');
+
+  if (userId === '' && existLocalHashedId) {
+    localHashedId = JSON.parse(window.localStorage.getItem('yls-web') as string).hashedId;
+  } else if (userId === '') {
+    userId = createRandomId();
+  }
+
+  hashedId = CryptoJS.SHA256(userId).toString(CryptoJS.enc.Base64);
+
+  return localHashedId ? localHashedId : hashedId;
 };
 
 const createTimestamp = () => {
@@ -12,59 +38,35 @@ const createTimestamp = () => {
   return now.toISOString();
 };
 
-const setLocalStorageClear = () => {
-  const list: any[] = [];
-  localStorage.setItem('yls-web', JSON.stringify(list));
-};
+const initialLog = (
+  userId: string,
+  serviceName: ServiceNameType,
+  name: string,
+  path: string | undefined
+) => {
+  const loggerType: LogPayloadParams = {
+    userId: userId,
+    path: '/',
+    serviceName: serviceName,
+    name: '',
+    message: '',
+  };
 
-const setLocalStorage = async (logger: LogType) => {
-  if (window.localStorage.getItem('yls-web') == undefined) {
-    const list: any[] = [];
-    list.push(logger);
-    localStorage.setItem('yls-web', JSON.stringify(list));
-  } else {
-    const remainList: any[] = JSON.parse(localStorage.getItem('yls-web') as string) || [];
-    if (remainList.length < 10) {
-      const updateList = [...remainList, logger];
-      localStorage.setItem('yls-web', JSON.stringify(updateList));
-    } else {
-      setLocalStorageClear();
-      const res = await postLog();
-    }
-  }
+  const logger = Logger(loggerType);
+
+  logger.event.name = name;
+  logger.event.path = path;
+
+  SetLocalStorage(logger);
 };
 
 export const useYLSLogger = () => {
   const screen = ({ userId, serviceName, name, path }: LogPayloadParams) => {
-    const loggerType: LogPayloadParams = {
-      userId: userId,
-      path: '/',
-      serviceName: serviceName,
-      name: '',
-      message: '',
-    };
-    const logger = Logger(loggerType);
-    console.log(`Logging screen information for path: ${serviceName}`);
-    logger.event.name = name;
-    logger.event.path = path;
-
-    setLocalStorage(logger);
+    initialLog(userId, serviceName, name, path);
   };
 
   const click = ({ userId, serviceName, name, path }: LogPayloadParams) => {
-    console.log(`Logging click information for button: ${name}`);
-    //사용자에서 path,name,message를 넣어줌
-    const loggerType: LogPayloadParams = {
-      userId: userId,
-      path: '/',
-      serviceName: serviceName,
-      name: '',
-      message: '',
-    };
-    const logger = Logger(loggerType);
-    logger.event.name = name;
-    logger.event.path = path;
-    setLocalStorage(logger);
+    initialLog(userId, serviceName, name, path);
   };
 
   return {
