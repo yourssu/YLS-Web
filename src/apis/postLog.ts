@@ -1,6 +1,6 @@
 import customedAxios from './customedAxios';
 
-export const postLog = async () => {
-  const res = await customedAxios.put('');
+export const postLog = async (data: any) => {
+  const res = await customedAxios.put('/log/list', data);
   return res.data;
 };
