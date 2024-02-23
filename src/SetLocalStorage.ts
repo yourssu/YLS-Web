@@ -1,7 +1,7 @@
 import { postLog } from './apis/postLog';
 import { LogType } from './types/LogType';
 
-const SetLocalStorageClear = () => {
+export const SetLocalStorageClear = () => {
   const list: any[] = [];
   localStorage.setItem('yls-web', JSON.stringify(list));
 };
