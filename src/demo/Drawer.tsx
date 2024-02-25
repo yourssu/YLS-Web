@@ -13,7 +13,6 @@ export const Drawer = () => {
       <div className="card">
         <LogScreen
           params={{
-            path: router.pathname,
             name: '',
             userId: '',
             serviceName: 'home',
