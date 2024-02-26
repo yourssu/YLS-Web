@@ -14,7 +14,7 @@ export const LogScreen = ({ children, params }: Props) => {
     logger.screen({
       ...params,
     });
-  }, [logger, params]);
+  }, []);
 
   return <>{children}</>;
 };
