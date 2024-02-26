@@ -22,7 +22,7 @@ YLS 내부에서는 timestamp와 platform을 처리합니다.
 
 userId는 사용처에서 넣어주어야 하며, version과 event 내부 필드는 PM으로부터 전달받은 값을 넣어주어야 합니다.
 
-# LogScreen
+### LogScreen
 
 사용자가 진입한 화면을 추적합니다.
 
@@ -50,7 +50,7 @@ export const Home = () => {
 };
 ```
 
-# LogClick
+### LogClick
 
 사용자의 클릭(이벤트)를 추적합니다.
 
