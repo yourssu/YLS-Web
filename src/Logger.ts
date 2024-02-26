@@ -1,5 +1,5 @@
 import { SetLocalStorage, SetLocalStorageClear } from './SetLocalStorage';
-import { LogPayloadParams, LogType, ServiceNameType } from './types/LogType';
+import { LogPayloadParams, LogType } from './types/LogType';
 import CryptoJS from 'crypto-js';
 import { postLog } from './apis/postLog';
 
@@ -17,7 +17,7 @@ const createRandomId = () => {
   return randomId;
 };
 
-const createHashedId = (userId: string) => {
+const createHashedID = (userId: string) => {
   let hashedId = '';
   let localHashedId = '';
   const existLocalHashedId = window.localStorage.getItem('yls-web');
@@ -39,35 +39,25 @@ const createTimestamp = () => {
   return now.toISOString();
 };
 
-const initialLog = (
-  userId: string,
-  serviceName: ServiceNameType,
-  name: string,
-  path: string | undefined
-) => {
+const initialLog = (userId: string, version: number, event: LogPayloadParams['event']) => {
   const loggerType: LogPayloadParams = {
     userId: userId,
-    path: '/',
-    serviceName: serviceName,
-    name: '',
-    message: '',
+    version: version,
+    event: event,
   };
 
   const logger = Logger(loggerType);
-
-  logger.event.name = name;
-  logger.event.path = path;
 
   SetLocalStorage(logger);
 };
 
 export const useYLSLogger = () => {
-  const screen = ({ userId, serviceName, name, path }: LogPayloadParams) => {
-    initialLog(userId, serviceName, name, path);
+  const screen = ({ userId, version, event }: LogPayloadParams) => {
+    initialLog(userId, version, event);
   };
 
-  const click = ({ userId, serviceName, name, path }: LogPayloadParams) => {
-    initialLog(userId, serviceName, name, path);
+  const click = ({ userId, version, event }: LogPayloadParams) => {
+    initialLog(userId, version, event);
   };
 
   return {
@@ -76,17 +66,14 @@ export const useYLSLogger = () => {
   };
 };
 
-export const Logger = ({ userId, serviceName, name, message, path, tags }: LogPayloadParams) => {
+export const Logger = ({ userId, version, event }: LogPayloadParams) => {
   return {
-    hashedId: createHashedId(userId),
+    hashedID: createHashedID(userId),
     timestamp: createTimestamp(),
+    version: version,
     event: {
       platform: 'web',
-      serviceName,
-      name,
-      message,
-      path,
-      tags,
+      ...event,
     },
   };
 };
@@ -95,6 +82,8 @@ window.addEventListener('unload', async (event) => {
   event.preventDefault();
 
   const logList: LogType[] = JSON.parse(localStorage.getItem('yls-web') as string) || [];
-  const res = await postLog(logList);
-  SetLocalStorageClear();
+  const res = await postLog([{ logRequestList: logList }]);
+  if (res.success) {
+    SetLocalStorageClear();
+  }
 });

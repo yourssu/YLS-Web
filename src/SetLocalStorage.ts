@@ -17,8 +17,10 @@ export const SetLocalStorage = async (logger: LogType) => {
       const updateList = [...remainList, logger];
       localStorage.setItem('yls-web', JSON.stringify(updateList));
     } else {
-      SetLocalStorageClear();
-      const res = await postLog();
+      const res = await postLog(remainList);
+      if (res.success) {
+        SetLocalStorageClear();
+      }
     }
   }
 };
