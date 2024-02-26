@@ -2,14 +2,14 @@
 export interface LogPayloadParams {
   userId: string;
   version: number;
-  event: any[];
+  event: any;
 }
 
 // LogType: 최종 Log 형태
 export interface LogType {
   hashedID: string;
   timestamp: string;
-  // version: number;
+  version: number;
   event: LogPayloadParams['event'];
 }
 
