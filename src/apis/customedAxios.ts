@@ -7,5 +7,3 @@ export const customedAxios = axios.create({
     withCredentials: true,
   },
 });
-
-export default customedAxios;
