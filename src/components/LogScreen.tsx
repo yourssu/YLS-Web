@@ -9,13 +9,9 @@ interface Props {
 
 export const LogScreen = ({ children, params }: Props) => {
   const logger = useYLSLogger();
-  let path = params.path;
-
-  if (!params.path) path = window.location.pathname;
 
   useEffect(() => {
     logger.screen({
-      path: path,
       ...params,
     });
   }, []);

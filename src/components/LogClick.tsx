@@ -10,14 +10,10 @@ interface Props {
 export const LogClick = ({ children, params }: Props) => {
   const logger = useYLSLogger();
   const child = Children.only(children);
-  let path = params.path;
-
-  if (!params.path) path = window.location.pathname;
 
   return cloneElement(child, {
     onClick: (...args: any[]) => {
       logger.click({
-        path: path,
         ...params,
       });
 
