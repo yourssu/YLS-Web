@@ -1,5 +1,5 @@
 import { SetLocalStorage, SetLocalStorageClear } from './SetLocalStorage';
-import { LogPayloadParams, LogType } from './types/LogType';
+import { LogPayloadParams, LogRequestList, LogType } from './types/LogType';
 import CryptoJS from 'crypto-js';
 import { postLog } from './apis/postLog';
 
@@ -82,7 +82,10 @@ window.addEventListener('unload', async (event) => {
   event.preventDefault();
 
   const logList: LogType[] = JSON.parse(localStorage.getItem('yls-web') as string) || [];
-  const res = await postLog([{ logRequestList: logList }]);
+  const req: LogRequestList = {
+    logRequestList: logList,
+  };
+  const res = await postLog(req);
   if (res.success) {
     SetLocalStorageClear();
   }
