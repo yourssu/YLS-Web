@@ -1,5 +1,5 @@
 import { postLog } from './apis/postLog';
-import { LogType } from './types/LogType';
+import { LogRequestList, LogType } from './types/LogType';
 
 export const SetLocalStorageClear = () => {
   const list: any[] = [];
@@ -17,7 +17,11 @@ export const SetLocalStorage = async (logger: LogType) => {
       const updateList = [...remainList, logger];
       localStorage.setItem('yls-web', JSON.stringify(updateList));
     } else {
-      const res = await postLog(remainList);
+      const req: LogRequestList = {
+        logRequestList: remainList,
+      };
+      const res = await postLog(req);
+
       if (res.success) {
         SetLocalStorageClear();
       }
