@@ -1,6 +1,6 @@
 {
   "name": "@yourssu/logging-system-react",
-  "private": "false",
+  "private": false,
   "version": "1.0.0",
   "description": "Yourssu Logging System for React",
   "keywords": [
